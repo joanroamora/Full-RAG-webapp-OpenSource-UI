@@ -45,6 +45,21 @@
                 }
             });
         }
+
+        // Función para eliminar un archivo
+        function deleteFile(filename) {
+            fetch('/delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ filename: filename })
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -63,7 +78,10 @@
             <div class="file-grid">
                 <ul>
                     {% for file in files %}
-                    <li>{{ file }}</li>
+                    <li>
+                        {{ file }}
+                        <span class="delete-icon" onclick="deleteFile('{{ file }}')">&times;</span>
+                    </li>
                     {% endfor %}
                 </ul>
             </div>

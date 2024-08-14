@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'temp/'
@@ -28,6 +28,17 @@ def upload_file():
             file.save(filepath)
     
     return redirect(url_for('main'))
+
+@app.route('/delete', methods=['POST'])
+def delete_file():
+    data = request.get_json()
+    filename = data.get('filename')
+    if filename:
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        if os.path.exists(filepath):
+            os.remove(filepath)
+            return jsonify({'status': 'File deleted'}), 200
+    return jsonify({'status': 'File not found'}), 404
 
 if __name__ == "__main__":
     app.run(debug=True)

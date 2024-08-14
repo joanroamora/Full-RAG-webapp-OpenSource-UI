@@ -213,6 +213,20 @@ body, html {
 .file-grid li {
     padding: 5px;
     border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delete-icon {
+    color: red;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.delete-icon:hover {
+    color: darkred;
 }
 
 @media (max-width: 768px) {
