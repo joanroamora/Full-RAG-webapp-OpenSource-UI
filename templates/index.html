@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>RAG Talk with your documents</h1>
+    </div>
+    <!-- Contenedor principal de la aplicación -->
+    <div class="container">
+        <div class="left-half">
+            <div class="drop-zone">
+                Arrastra tus archivos aquí
+            </div>
+            <div class="file-grid">
+                <!-- Aquí se mostrarán los archivos cargados -->
+            </div>
+            <button class="load-button">LOAD</button>
+        </div>
+        <div class="right-half">
+            <div class="rol">
+                <label for="rol-input">Rol:</label>
+                <input type="text" id="rol-input" class="text-input" />
+            </div>
+            <div class="embedding_model">
+                <label for="embedding-select">Embedding:</label>
+                <select id="embedding-select" class="select-input">
+                    <option value="model-1">Modelo-1</option>
+                    <option value="model-2">Modelo-2</option>
+                    <option value="model-3">Modelo-3</option>
+                </select>
+            </div>
+            <div class="pregunta">
+                <label for="pregunta-input">Pregunta:</label>
+                <textarea id="pregunta-input" class="text-input"></textarea>
+            </div>
+            <button class="do-it-button">DO IT!</button>
+            <div class="output-grid">
+                <!-- Aquí se escribirá el output del software -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>

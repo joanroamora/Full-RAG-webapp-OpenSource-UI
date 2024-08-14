@@ -1,0 +1,243 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    height: calc(100vh - 80px); /* Ajusta la altura total restando la altura del header */
+    margin-top: 80px; /* Mueve los contenedores hacia abajo para evitar superposición con el header */
+    padding: 20px;
+    position: relative;
+    z-index: 1; /* Asegura que el contenido esté por encima del video */
+}
+
+.left-half, .right-half {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.left-half {
+    border-right: 1px solid #ccc;
+}
+
+.drop-zone {
+    flex: 2;
+    border: 2px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+}
+
+.drop-zone:hover {
+    background-color: #f0f0f0;
+}
+
+.file-grid {
+    flex: 1;
+    border: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    transition: background-color 0.3s;
+    width: 100%; /* Asegura que el grid ocupe todo el ancho del div derecho */
+}
+
+.file-grid:hover {
+    background-color: #f9f9f9;
+}
+
+.load-button {
+    flex: 0.2;
+    background-color: #28a745; /* Color verde */
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.load-button:hover {
+    background-color: #218838; /* Hover en verde oscuro */
+}
+
+.header {
+    height: 80px; 
+    width: 100%; 
+    background-color: #f8f9fa; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    position: fixed; 
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.right-half {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    justify-content: flex-start; 
+    padding-top: 20px; 
+}
+
+.rol, .embedding_model, .pregunta {
+    width: 100%; 
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.rol label, .embedding_model label, .pregunta label {
+    font-size: 16px;
+    margin-right: 10px;
+    white-space: nowrap;
+}
+
+.text-input {
+    flex: 1;
+    height: 20px;
+    padding: 4px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.pregunta .text-input {
+    height: 40px; 
+    resize: none;
+}
+
+.do-it-button {
+    width: 100%; 
+    padding: 10px;
+    margin: 10px 0; 
+    background-color: #28a745; 
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.do-it-button:hover {
+    background-color: #218838; 
+}
+
+.output-grid {
+    flex: 1; 
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+    width: 100%; 
+    transition: background-color 0.3s;
+}
+
+.output-grid:hover {
+    background-color: #f1f1f1;
+}
+
+.select-input {
+    flex: 1;
+    height: 24px; /* Ajustado para que coincida con la altura de los otros inputs */
+    padding: 4px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    width: 100%; /* Asegura que ocupe todo el ancho disponible */
+}
+
+/* Estilos para la página de inicio */
+#background-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%; 
+    min-height: 100%;
+    z-index: -1; /* Asegura que el video esté detrás de todo */
+    object-fit: cover;
+}
+
+.start-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.start-button {
+    background-color: black; /* Fondo negro */
+    color: #39FF14; /* Texto verde fluorescente */
+    padding: 20px 40px;
+    font-size: 24px;
+    border: 2px solid white; /* Borde blanco */
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.start-button:hover {
+    background-color: #333; /* Color de fondo un poco más claro al hacer hover */
+    transform: scale(1.05);
+}
+
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        height: auto;
+        margin-top: 80px;
+    }
+
+    .left-half, .right-half {
+        width: 100%;
+    }
+
+    .drop-zone {
+        flex: 3; 
+        height: auto; 
+        margin-bottom: 20px; 
+    }
+
+    .file-grid {
+        flex: 4; 
+        height: auto;
+        margin-right: 0;
+    }
+
+    .load-button {
+        width: 100%;
+        margin-top: 20px;
+        height: 60px;
+    }
+
+    .rol, .embedding_model, .pregunta {
+        margin-bottom: 10px;
+    }
+
+    .right-half {
+        padding-top: 20px; 
+        justify-content: flex-start;
+    }
+}
