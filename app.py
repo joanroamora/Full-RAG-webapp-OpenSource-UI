@@ -1,4 +1,5 @@
 import os
+import requests
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 
 app = Flask(__name__)
@@ -39,6 +40,42 @@ def delete_file():
             os.remove(filepath)
             return jsonify({'status': 'File deleted'}), 200
     return jsonify({'status': 'File not found'}), 404
+
+@app.route('/load', methods=['POST'])
+def load_files():
+    files = os.listdir(app.config['UPLOAD_FOLDER'])
+
+    if not files:
+        return jsonify({'status': 'error', 'message': 'Agregue o arrastre archivos pdf al sistema.'})
+
+    files_to_send = {}
+    file_handlers = []
+
+    try:
+        for filename in files:
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file_data = open(filepath, 'rb')
+            files_to_send[filename] = file_data
+            file_handlers.append(file_data)  # Guardar el manejador de archivo para cerrarlo después
+
+        response = requests.post('http://127.0.0.1:5001/upload', files=files_to_send)
+        
+        if response.status_code == 200:
+            # Eliminar archivos de la carpeta temp después de un envío exitoso
+            for filepath in files_to_send.values():
+                filepath.close()  # Cerrar el archivo después de que se haya enviado
+                os.remove(filepath.name)
+            return jsonify({'status': 'success'})
+        else:
+            return jsonify({'status': 'error', 'message': 'Error al enviar los archivos.'})
+    
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)})
+    
+    finally:
+        # Asegurarse de que todos los archivos se cierren incluso si hay un error
+        for file_data in file_handlers:
+            file_data.close()
 
 if __name__ == "__main__":
     app.run(debug=True)

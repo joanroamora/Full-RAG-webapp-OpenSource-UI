@@ -13,7 +13,7 @@
             const files = event.dataTransfer.files;
             for (let i = 0; i < files.length; i++) {
                 if (files[i].type === "application/pdf") {
-                    formData.append("files[]", files[i]);  // Usamos "files[]" para subir múltiples archivos
+                    formData.append("files[]", files[i]);
                 }
             }
             uploadFiles(formData);
@@ -29,7 +29,7 @@
             const files = event.target.files;
             for (let i = 0; i < files.length; i++) {
                 if (files[i].type === "application/pdf") {
-                    formData.append("files[]", files[i]);  // Usamos "files[]" para subir múltiples archivos
+                    formData.append("files[]", files[i]);
                 }
             }
             uploadFiles(formData);
@@ -60,6 +60,24 @@
                 }
             });
         }
+
+        // Función para manejar el botón Load
+        function loadFiles() {
+            fetch('/load', {
+                method: 'POST'
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                if (data.status === 'error') {
+                    alert(data.message);
+                } else if (data.status === 'success') {
+                    alert('Archivos enviados exitosamente');
+                    window.location.reload();  // Recargar la página para limpiar el grid
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
     </script>
 </head>
 <body>
@@ -85,7 +103,7 @@
                     {% endfor %}
                 </ul>
             </div>
-            <button class="load-button">LOAD</button>
+            <button class="load-button" onclick="loadFiles()">LOAD</button> <!-- Evento de clic -->
         </div>
         <div class="right-half">
             <div class="rol">
