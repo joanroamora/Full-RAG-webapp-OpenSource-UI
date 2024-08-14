@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for
 import os
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'temp/'
@@ -15,18 +15,17 @@ def main():
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
-    if 'file' not in request.files:
+    if 'files[]' not in request.files:
         return redirect(request.url)
     
-    file = request.files['file']
+    files = request.files.getlist('files[]')
     
-    if file.filename == '':
-        return redirect(request.url)
-    
-    if file and file.filename.endswith('.pdf'):
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-        file.save(filepath)
-        return redirect(url_for('main'))
+    for file in files:
+        if file.filename == '':
+            continue
+        if file and file.filename.endswith('.pdf'):
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+            file.save(filepath)
     
     return redirect(url_for('main'))
 

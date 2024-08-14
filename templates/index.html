@@ -6,14 +6,14 @@
     <title>Your App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <script>
-        // Manejo de arrastre y soltado
+        // Manejo de arrastre y soltado de múltiples archivos
         function dropHandler(event) {
             event.preventDefault();
             const formData = new FormData();
             const files = event.dataTransfer.files;
             for (let i = 0; i < files.length; i++) {
                 if (files[i].type === "application/pdf") {
-                    formData.append("file", files[i]);
+                    formData.append("files[]", files[i]);  // Usamos "files[]" para subir múltiples archivos
                 }
             }
             uploadFiles(formData);
@@ -23,13 +23,13 @@
             event.preventDefault();
         }
 
-        // Manejo de la selección de archivos
+        // Manejo de la selección de múltiples archivos
         function fileInputHandler(event) {
             const formData = new FormData();
             const files = event.target.files;
             for (let i = 0; i < files.length; i++) {
                 if (files[i].type === "application/pdf") {
-                    formData.append("file", files[i]);
+                    formData.append("files[]", files[i]);  // Usamos "files[]" para subir múltiples archivos
                 }
             }
             uploadFiles(formData);
@@ -59,7 +59,7 @@
             <div class="drop-zone" onclick="document.getElementById('fileInput').click()" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
                 Arrastra tus archivos aquí o haz clic para seleccionar
             </div>
-            <input type="file" id="fileInput" accept=".pdf" style="display: none;" onchange="fileInputHandler(event)">
+            <input type="file" id="fileInput" accept=".pdf" style="display: none;" onchange="fileInputHandler(event)" multiple>  <!-- Acepta múltiples archivos -->
             <div class="file-grid">
                 <ul>
                     {% for file in files %}
