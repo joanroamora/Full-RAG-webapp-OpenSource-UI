@@ -29,20 +29,6 @@ body, html {
     border-right: 1px solid #ccc;
 }
 
-.drop-zone {
-    flex: 2;
-    border: 2px dashed #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    transition: background-color 0.3s;
-}
-
-.drop-zone:hover {
-    background-color: #f0f0f0;
-}
-
 .file-grid {
     flex: 1;
     border: 1px solid #ccc;
@@ -202,6 +188,32 @@ body, html {
     transform: scale(1.05);
 }
 
+.drop-zone {
+    flex: 2;
+    border: 2px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    text-align: center;
+    padding: 20px;
+}
+
+.drop-zone:hover {
+    background-color: #f0f0f0;
+}
+
+.file-grid ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.file-grid li {
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+}
 
 @media (max-width: 768px) {
     .container {

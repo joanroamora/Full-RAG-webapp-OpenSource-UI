@@ -5,20 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script>
+        // Manejo de arrastre y soltado
+        function dropHandler(event) {
+            event.preventDefault();
+            const formData = new FormData();
+            const files = event.dataTransfer.files;
+            for (let i = 0; i < files.length; i++) {
+                if (files[i].type === "application/pdf") {
+                    formData.append("file", files[i]);
+                }
+            }
+            uploadFiles(formData);
+        }
+
+        function dragOverHandler(event) {
+            event.preventDefault();
+        }
+
+        // Manejo de la selección de archivos
+        function fileInputHandler(event) {
+            const formData = new FormData();
+            const files = event.target.files;
+            for (let i = 0; i < files.length; i++) {
+                if (files[i].type === "application/pdf") {
+                    formData.append("file", files[i]);
+                }
+            }
+            uploadFiles(formData);
+        }
+
+        function uploadFiles(formData) {
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                }
+            });
+        }
+    </script>
 </head>
 <body>
     <!-- Header -->
     <div class="header">
-        <h1>RAG Talk with your documents</h1>
+        <h1>Rag Ask to your Documents</h1>
     </div>
+
     <!-- Contenedor principal de la aplicación -->
     <div class="container">
         <div class="left-half">
-            <div class="drop-zone">
-                Arrastra tus archivos aquí
+            <div class="drop-zone" onclick="document.getElementById('fileInput').click()" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+                Arrastra tus archivos aquí o haz clic para seleccionar
             </div>
+            <input type="file" id="fileInput" accept=".pdf" style="display: none;" onchange="fileInputHandler(event)">
             <div class="file-grid">
-                <!-- Aquí se mostrarán los archivos cargados -->
+                <ul>
+                    {% for file in files %}
+                    <li>{{ file }}</li>
+                    {% endfor %}
+                </ul>
             </div>
             <button class="load-button">LOAD</button>
         </div>
