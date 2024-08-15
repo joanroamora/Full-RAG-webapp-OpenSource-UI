@@ -120,8 +120,12 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log('Success:', data);
-                // Aquí puedes actualizar la interfaz con la respuesta del servidor, si es necesario.
+                if (data.status === 'success') {
+                    // Actualizar el contenido del output-grid con la respuesta del servidor
+                    document.querySelector('.output-grid').innerHTML = `<p>${data.response}</p>`;
+                } else {
+                    console.error('Error:', data.message);
+                }
             })
             .catch((error) => {
                 console.error('Error:', error);
