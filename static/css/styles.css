@@ -82,14 +82,14 @@ body, html {
     padding-top: 20px; 
 }
 
-.rol, .embedding_model, .pregunta {
+.temperature, .rol-input, .pregunta {
     width: 100%; 
     display: flex;
     align-items: center;
     margin-bottom: 20px;
 }
 
-.rol label, .embedding_model label, .pregunta label {
+.temperature label, .rol-input label, .pregunta label {
     font-size: 16px;
     margin-right: 10px;
     white-space: nowrap;
@@ -258,7 +258,7 @@ body, html {
         height: 60px;
     }
 
-    .rol, .embedding_model, .pregunta {
+    .temperature, .rol-input, .pregunta {
         margin-bottom: 10px;
     }
 

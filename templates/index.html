@@ -78,6 +78,55 @@
                 console.error('Error:', error);
             });
         }
+
+        // Función para validar los campos y enviar el POST request
+        function doIt() {
+            // Obtener los valores de los inputs
+            const temperature = parseFloat(document.getElementById('temperature-input').value);
+            const role = document.getElementById('rol-select').value;
+            const question = document.getElementById('pregunta-input').value.trim();
+
+            // Validar temperature (debe ser un número flotante entre 0.0 y 1.0)
+            if (isNaN(temperature) || temperature < 0.0 || temperature > 1.0) {
+                alert('Temperature must be a number between 0.0 and 1.0');
+                return;
+            }
+
+            // Validar role (debe tener una de las opciones seleccionadas)
+            if (role !== 'assistant' && role !== 'expert' && role !== 'advisor') {
+                alert('Please select a valid role.');
+                return;
+            }
+
+            // Validar question (debe tener algún texto)
+            if (question === '') {
+                alert('Please enter a question.');
+                return;
+            }
+
+            // Si todos los campos son válidos, enviar los datos al servidor
+            const data = {
+                temperature: temperature,
+                role: role,
+                question: question
+            };
+
+            fetch('http://127.0.0.1:5001/doit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                // Aquí puedes actualizar la interfaz con la respuesta del servidor, si es necesario.
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
     </script>
 </head>
 <body>
@@ -106,23 +155,23 @@
             <button class="load-button" onclick="loadFiles()">LOAD</button> <!-- Evento de clic -->
         </div>
         <div class="right-half">
-            <div class="rol">
-                <label for="rol-input">Rol:</label>
-                <input type="text" id="rol-input" class="text-input" />
+            <div class="temperature">
+                <label for="temperature-input">Temperature -between 0.0 to 1.0-:</label>
+                <input type="text" id="temperature-input" class="text-input" />
             </div>
-            <div class="embedding_model">
-                <label for="embedding-select">Rol:</label>
-                <select id="embedding-select" class="select-input">
+            <div class="rol-input">
+                <label for="rol-select">Rol:</label>
+                <select id="rol-select" class="select-input">
                     <option value="assistant">assistant</option>
                     <option value="expert">expert</option>
                     <option value="advisor">advisor</option>
                 </select>
             </div>
             <div class="pregunta">
-                <label for="pregunta-input">Pregunta:</label>
+                <label for="pregunta-input">Question:</label>
                 <textarea id="pregunta-input" class="text-input"></textarea>
             </div>
-            <button class="do-it-button">DO IT!</button>
+            <button class="do-it-button" onclick="doIt()">DO IT!</button>
             <div class="output-grid">
                 <!-- Aquí se escribirá el output del software -->
             </div>
