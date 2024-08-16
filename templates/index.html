@@ -5,6 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        /* Estilo para el botón CLEAN */
+        .clean-button {
+            background-color: red;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 0;
+            cursor: pointer;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+
+        .clean-button:hover {
+            background-color: darkred;
+        }
+    </style>
     <script>
         // Manejo de arrastre y soltado de múltiples archivos
         function dropHandler(event) {
@@ -131,6 +153,28 @@
                 console.error('Error:', error);
             });
         }
+
+         // Función para enviar una solicitud POST al backend 5001 para limpiar el sistema
+         function cleanSystem() {
+            fetch('http://127.0.0.1:5001/clean', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('System cleaned successfully');
+                    document.querySelector('.output-grid').innerHTML = ''; // Limpia el output-grid si es necesario
+                } else {
+                    alert('Failed to clean the system');
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
     </script>
 </head>
 <body>
@@ -179,6 +223,7 @@
             <div class="output-grid">
                 <!-- Aquí se escribirá el output del software -->
             </div>
+            <button class="clean-button" onclick="cleanSystem()">CLEAN</button> <!-- Botón Clean -->
         </div>
     </div>
 </body>

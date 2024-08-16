@@ -229,6 +229,36 @@ body, html {
     color: darkred;
 }
 
+.clean-button {
+    background-color: red;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.clean-button:hover {
+    background-color: darkred;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Estilo del contenedor derecho ajustado para no interferir con el botón */
+.right-half {
+    position: relative;
+    padding-bottom: 60px; /* Espacio extra para el botón */
+}
+
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
