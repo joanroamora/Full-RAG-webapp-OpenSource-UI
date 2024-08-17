@@ -58,8 +58,10 @@ def load_files():
             files_to_send[filename] = file_data
             file_handlers.append(file_data)  # Guardar el manejador de archivo para cerrarlo después
 
-        response = requests.post('http://127.0.0.1:5001/upload', files=files_to_send)
-        
+        # Utiliza la IP privada del backend desde la variable de entorno
+        backend_ip = os.getenv('BACKEND_PRIVATE_IP')
+        response = requests.post(f'http://{backend_ip}:5001/upload', files=files_to_send)
+
         if response.status_code == 200:
             # Eliminar archivos de la carpeta temp después de un envío exitoso
             for filepath in files_to_send.values():
