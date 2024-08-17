@@ -133,12 +133,15 @@
                 question: question
             };
 
-            fetch('http://127.0.0.1:5001/doit', {
+
+            fetch('http://10.0.2.250:5001/doit', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify({
+                key: 'value'
+                })
             })
             .then(response => response.json())
             .then(data => {
